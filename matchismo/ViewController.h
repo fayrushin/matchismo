@@ -7,8 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Deck.h"
+#import "CardMatchingGame.h"
 
 @interface ViewController : UIViewController
+
+@property (strong, nonatomic) CardMatchingGame *game;
+@property (strong, nonatomic) NSMutableArray *history;
+
+- (NSAttributedString *)titleForCard:(Card *)card;
+- (UIImage *)backgroundImageForCard:(Card *)card;
+- (void) updateUI;
+
+- (Deck *)createDeck;
 
 
 @end
