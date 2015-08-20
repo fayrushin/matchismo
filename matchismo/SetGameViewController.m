@@ -9,10 +9,13 @@
 #import "SetGameViewController.h"
 #import "SetCardDeck.h"
 #import "SetCard.h"
-#import "HistoryViewController.h"
+#import "SetCardView.h"
+
 
 
 @interface SetGameViewController ()
+
+@property (strong,nonatomic) UIView *SetCardView;
 
 @end
 
@@ -24,6 +27,22 @@
     [self updateUI];
     
     // Do any additional setup after loading the view.
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    if (self) {
+        CGRect screenRect = self.view.bounds;
+        screenRect.size.height /= 3;
+        screenRect.size.width /=3;
+        screenRect.origin.y = screenRect.size.height;
+        screenRect.origin.x =screenRect.size.width;
+        self.SetCardView = [[SetCardView alloc] initWithFrame:screenRect];
+        [self.view addSubview:self.SetCardView];
+    }
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -43,39 +62,7 @@
 - (NSAttributedString *)titleForCardWithoutChecking:(Card *)card
 {
     NSString *symbol = @"?";
-    NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
-    if ([card isKindOfClass:[SetCard class]]) {
-        SetCard *setCard = (SetCard *)card;
-        if ([setCard.symbol isEqualToString:@"oval"]) symbol = @"●";
-        if ([setCard.symbol isEqualToString:@"squiggle"]) symbol = @"▲";
-        if ([setCard.symbol isEqualToString:@"diamond"]) symbol = @"■";
-        symbol = [symbol stringByPaddingToLength:setCard.number
-                                      withString:symbol
-                                 startingAtIndex:0];
-        if ([setCard.color isEqualToString:@"red"])
-            [attributes setObject:[UIColor redColor]
-                           forKey:NSForegroundColorAttributeName];
-        if ([setCard.color isEqualToString:@"green"])
-            [attributes setObject:[UIColor greenColor]
-                           forKey:NSForegroundColorAttributeName];
-        if ([setCard.color isEqualToString:@"purple"])
-            [attributes setObject:[UIColor purpleColor]
-                           forKey:NSForegroundColorAttributeName];
-        if ([setCard.shading isEqualToString:@"solid"])
-            [attributes setObject:@-5
-                           forKey:NSStrokeWidthAttributeName];
-        if ([setCard.shading isEqualToString:@"striped"])
-            [attributes addEntriesFromDictionary:@{
-                                                   NSStrokeWidthAttributeName : @-5,
-                                                   NSStrokeColorAttributeName : attributes[NSForegroundColorAttributeName],
-                                                   NSForegroundColorAttributeName : [attributes[NSForegroundColorAttributeName]
-                                                                                     colorWithAlphaComponent:0.1]
-                                                   }];
-        if ([setCard.shading isEqualToString:@"open"])
-            [attributes setObject:@5 forKey:NSStrokeWidthAttributeName];
-    }
-    return [[NSMutableAttributedString alloc] initWithString:symbol
-                                                  attributes:attributes];
+        return [[NSMutableAttributedString alloc] initWithString:symbol];
 }
 
 - (NSAttributedString *)titleForCard:(Card *)card
@@ -84,16 +71,6 @@
     
 }
 
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"Show History"]) {
-        if ([segue.destinationViewController isKindOfClass:[HistoryViewController class]]) {
-            [segue.destinationViewController setHistory:self.history];
-        }
-    }
-
-}
 
 @end

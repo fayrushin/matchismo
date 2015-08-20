@@ -8,18 +8,35 @@
 
 #import "PlayingCardMGViewController.h"
 #import "PlayingCardDeck.h"
-#import "HistoryViewController.h"
+#import "PlayingCardView.h"
 
 
 @interface PlayingCardMGViewController ()
+@property (weak, nonatomic) IBOutlet UIView *PlaceForDeckView;
+@property (strong, nonatomic)PlayingCardView *playingCardView;
 
 @end
 
 @implementation PlayingCardMGViewController
 
+#pragma mark - View life cycle
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    if (self) {
+        CGRect bounds = self.PlaceForDeckView.bounds;
+        CGRect cardBound = CGRectMake(bounds.origin.x, bounds.origin.y, bounds.size.width/6.0, bounds.size.height/6.0);
+        self.playingCardView = [[PlayingCardView alloc] initWithFrame:cardBound];
+        self.playingCardView.rank = 13;
+        self.playingCardView.suit = @"♥︎";
+        [self.PlaceForDeckView addSubview:self.playingCardView];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -33,16 +50,9 @@
 }
 
 
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"Show History"]) {
-        if ([segue.destinationViewController isKindOfClass:[HistoryViewController class]]) {
-            [segue.destinationViewController setHistory:self.history];
-        }
-    }
-}
+
+
 
 
 @end

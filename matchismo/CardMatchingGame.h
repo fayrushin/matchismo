@@ -18,11 +18,13 @@
 
 - (void)chooseCardAtIndex:(NSUInteger)index;
 - (Card *)cardAtIndex:(NSUInteger)index;
+- (void)addCardsFromDeck;
 
 @property (nonatomic,readonly) NSInteger score;
 @property (nonatomic) NSInteger gameMode;
-@property (nonatomic,readonly) NSInteger pointForLastMatch;
-@property (nonatomic, readonly) BOOL matching;
+@property (nonatomic, readonly) NSUInteger cardsInPlay;
+
+
 
 
 @end

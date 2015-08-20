@@ -10,39 +10,24 @@
 
 @implementation SetCard
 
-@synthesize symbol = _symbol, shading = _shading, color = _color;
--(NSString *)symbol
+-(void)setSymbol:(NSUInteger)symbol
 {
-    return _symbol ? _symbol : @"?";
-}
--(void)setSymbol:(NSString *)symbol
-{
-    if([[SetCard validSymbols] containsObject:symbol])
+    if (symbol <= [SetCard maxNumber])
         _symbol = symbol;
 }
 
--(NSString *)shading
-{
-    return _shading ? _shading : @"?";
-}
 
--(void)setShading:(NSString *)shading
+-(void)setShading:(NSUInteger)shading
 {
-    if ([[SetCard validShadings] containsObject:shading]) {
+    if (shading <= [SetCard maxNumber])
         _shading = shading;
-    }
 }
 
--(NSString *)color
-{
-    return _color ? _color : @"?";
-}
 
--(void)setColor:(NSString *)color
+-(void)setColor:(NSUInteger)color
 {
-    if ([[SetCard validColors] containsObject:color]) {
+    if (color <= [SetCard maxNumber])
         _color = color;
-    }
 }
 
 -(void) setNumber:(NSUInteger)number
@@ -52,20 +37,6 @@
     }
 }
 
-+(NSArray *)validSymbols
-{
-    return @[@"oval",@"squiggle",@"diamond"];
-}
-
-+(NSArray *)validShadings
-{
-    return @[@"solid",@"open",@"striped"];
-}
-
-+(NSArray *)validColors
-{
-    return @[@"red",@"green",@"purple"];
-}
 +(NSUInteger)maxNumber
 {
     return 3;
@@ -82,19 +53,19 @@
     NSMutableArray *shading = [[NSMutableArray alloc] init];
     NSMutableArray *symbol = [[NSMutableArray alloc] init];
     NSMutableArray *number = [[NSMutableArray alloc] init];
-    [color addObject:self.color];
-    [shading addObject:self.shading];
-    [symbol addObject:self.symbol];
+    [color addObject:@(self.color)];
+    [shading addObject:@(self.shading)];
+    [symbol addObject:@(self.symbol)];
     [number addObject:@(self.number)];
     for (id otherCard in otherCards) {
         if ([otherCard isKindOfClass:[SetCard class]]) {
             SetCard *otherSetCard = (SetCard *) otherCard;
-            if (![color containsObject:otherSetCard.color])
-                [color addObject:otherSetCard.color];
-            if (![shading containsObject:otherSetCard.shading])
-                [shading addObject:otherSetCard.shading];
-            if (![symbol containsObject:otherSetCard.symbol])
-                [symbol addObject:otherSetCard.symbol];
+            if (![color containsObject:@(otherSetCard.color)])
+                [color addObject:@(otherSetCard.color)];
+            if (![shading containsObject:@(otherSetCard.shading)])
+                [shading addObject:@(otherSetCard.shading)];
+            if (![symbol containsObject:@(otherSetCard.symbol)])
+                [symbol addObject:@(otherSetCard.symbol)];
             if (![number containsObject:@(otherSetCard.number)])
                 [number addObject:@(otherSetCard.number)];
             

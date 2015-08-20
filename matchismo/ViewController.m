@@ -14,43 +14,27 @@
 
 
 @property(strong, nonatomic) Deck *myDeck;
-@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
+@property (weak, nonatomic) IBOutlet UIView *placeForDeck;
+@property (strong,nonatomic) NSMutableArray *cardViews;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
-
-
-
 
 @end
 
 @implementation ViewController
 
--(NSArray *)history
-{
-    if (!_history) {
-        _history = [[NSMutableArray alloc] init];
-    }
-    return _history;
-}
-
+#pragma mark - View life Cycle
 - (void) viewDidLoad
 {
     [super viewDidLoad];
-    self.game.gameMode = 2;
-}
-- (IBAction)redealButton:(UIButton *)sender
-{
-    NSInteger savingGameModeOfOldGame = self.game.gameMode;
-    self.game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count] usingDeck:[self createDeck]];
-    self.game.gameMode = savingGameModeOfOldGame;
-    [self updateUI];
-    self.history = [[NSMutableArray alloc] init];
-    
 }
 
+
+
+#pragma mark - Properties
 - (CardMatchingGame *)game
 {
     if (!_game) {
-        _game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count] usingDeck:[self createDeck]];
+        _game = [[CardMatchingGame alloc] initWithCardCount:self.cardCount usingDeck:[self createDeck]];
     }
     return _game;
 }
@@ -59,42 +43,29 @@
     return nil;
 }
 
+-(NSMutableArray *)cardViews
+{
+    if (!_cardViews) {
+        _cardViews = [[NSMutableArray alloc] init];
+    }
+    return _cardViews;
+}
+
+#pragma mark - Actions
+- (IBAction)redealButton:(UIButton *)sender
+{
+    NSInteger savingGameModeOfOldGame = self.game.gameMode;
+    self.game = [[CardMatchingGame alloc] initWithCardCount:self.cardCount usingDeck:[self createDeck]];
+    self.game.gameMode = savingGameModeOfOldGame;
+    [self updateUI];
+    
+}
+
 - (IBAction)touchCardButton:(UIButton *)sender
 {
-    NSMutableAttributedString *cardsContent = [[NSMutableAttributedString alloc] init];
-    for (int i = 0; i < [self.cardButtons count]; i++) {
-        Card *myCard = [self.game cardAtIndex:i];
-        if (!myCard.isMatched && myCard.isChosen) {
-            NSAttributedString *text = [self titleForCard:myCard];
-            [cardsContent appendAttributedString:text];
-        }
-    }
+    
     NSInteger chosenButtonIndex = [self.cardButtons indexOfObject:sender];
     [self.game chooseCardAtIndex:chosenButtonIndex];
-    
-    NSMutableAttributedString *myText;
-    
-    if (self.game.matching) {
-        NSAttributedString *text = [self titleForCardWithoutChecking:[self.game cardAtIndex:chosenButtonIndex]];
-        if (self.game.pointForLastMatch > 0)
-            myText = [[NSMutableAttributedString alloc] initWithString:@"Matched "];
-        else myText = [[NSMutableAttributedString alloc] init];
-        [myText appendAttributedString:text];
-        
-        [myText appendAttributedString:cardsContent];
-        NSString *text1;
-        if (self.game.pointForLastMatch > 0){
-            text1 = [NSString stringWithFormat:@" for %ld points.", self.game.pointForLastMatch];
-        }
-        
-        else {
-            text1 = [NSString stringWithFormat:@" don't match! %ld point penalty!", -self.game.pointForLastMatch];
-        }
-
-        [myText appendAttributedString:[[NSAttributedString alloc] initWithString:text1]];
-        [self.history addObject:myText];
-        
-    }
     [self updateUI];
     
 }
@@ -113,6 +84,7 @@
 
 }
 
+#pragma mark - Utilities
 - (NSAttributedString *)titleForCardWithoutChecking:(Card *)card
 {
     return [[NSAttributedString alloc] initWithString:card.contents];

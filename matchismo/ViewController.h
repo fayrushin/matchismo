@@ -13,11 +13,12 @@
 @interface ViewController : UIViewController
 
 @property (strong, nonatomic) CardMatchingGame *game;
-@property (strong, nonatomic) NSMutableArray *history;
+@property (nonatomic) NSInteger cardCount;
 
 - (NSAttributedString *)titleForCard:(Card *)card;
 - (UIImage *)backgroundImageForCard:(Card *)card;
 - (void) updateUI;
+
 
 - (Deck *)createDeck;
 
