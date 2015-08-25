@@ -30,23 +30,39 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0KY-Ya-Do1">
-                                <rect key="frame" x="80" y="481" width="64" height="30"/>
+                                <rect key="frame" x="157" y="490.5" width="64" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0z5-ro-0cJ">
                                 <rect key="frame" x="16" y="28" width="288" height="445"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R2x-9N-EnD">
+                                <rect key="frame" x="80" y="481" width="69" height="30"/>
+                                <color key="backgroundColor" red="0.97659731780000003" green="1" blue="0.52020342149999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="add cards">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="addCardsButton:" destination="F4Q-8J-Ah6" eventType="touchUpInside" id="q2C-d3-k8V"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="0z5-ro-0cJ" firstAttribute="leading" secondItem="Z5W-5c-Vcl" secondAttribute="leading" id="0Is-O6-1kH"/>
                             <constraint firstItem="0z5-ro-0cJ" firstAttribute="trailing" secondItem="6d3-Dt-puu" secondAttribute="trailingMargin" id="2AX-pB-P9G"/>
+                            <constraint firstItem="R2x-9N-EnD" firstAttribute="height" secondItem="Z5W-5c-Vcl" secondAttribute="height" id="3Xh-V2-TfU"/>
                             <constraint firstItem="0z5-ro-0cJ" firstAttribute="top" secondItem="jAY-8E-KxC" secondAttribute="bottom" constant="8" id="3sY-gL-Rdw"/>
+                            <constraint firstItem="R2x-9N-EnD" firstAttribute="leading" secondItem="Z5W-5c-Vcl" secondAttribute="trailing" constant="8" id="4Fq-pJ-Zlt"/>
+                            <constraint firstItem="0KY-Ya-Do1" firstAttribute="leading" secondItem="R2x-9N-EnD" secondAttribute="trailing" constant="8" id="5Y2-I2-7W2"/>
                             <constraint firstItem="Z5W-5c-Vcl" firstAttribute="leading" secondItem="6d3-Dt-puu" secondAttribute="leadingMargin" constant="8" id="KpG-Jm-x6I"/>
                             <constraint firstItem="4fM-Pp-xLC" firstAttribute="top" secondItem="Z5W-5c-Vcl" secondAttribute="bottom" constant="8" id="Nge-YT-A8K"/>
+                            <constraint firstItem="0z5-ro-0cJ" firstAttribute="leading" secondItem="6d3-Dt-puu" secondAttribute="leadingMargin" id="Sfs-Jx-EKb"/>
+                            <constraint firstItem="R2x-9N-EnD" firstAttribute="bottom" secondItem="0KY-Ya-Do1" secondAttribute="bottom" id="Wqd-we-4Qa"/>
                             <constraint firstItem="Z5W-5c-Vcl" firstAttribute="leading" secondItem="6d3-Dt-puu" secondAttribute="leadingMargin" id="bZJ-rc-xVf"/>
                             <constraint firstItem="4fM-Pp-xLC" firstAttribute="top" secondItem="Z5W-5c-Vcl" secondAttribute="bottom" constant="8" id="d2D-nG-pRs"/>
                             <constraint firstItem="0KY-Ya-Do1" firstAttribute="leading" secondItem="Z5W-5c-Vcl" secondAttribute="trailing" constant="8" id="eDh-IF-yfK"/>
@@ -55,11 +71,16 @@
                             <constraint firstItem="0KY-Ya-Do1" firstAttribute="bottom" secondItem="Z5W-5c-Vcl" secondAttribute="bottom" id="iPC-ZM-HQg"/>
                             <constraint firstItem="0KY-Ya-Do1" firstAttribute="height" secondItem="Z5W-5c-Vcl" secondAttribute="height" id="qL4-gT-676"/>
                             <constraint firstItem="Z5W-5c-Vcl" firstAttribute="top" secondItem="0z5-ro-0cJ" secondAttribute="bottom" constant="8" symbolic="YES" id="r5W-mj-RJB"/>
+                            <constraint firstItem="R2x-9N-EnD" firstAttribute="bottom" secondItem="Z5W-5c-Vcl" secondAttribute="bottom" id="zaW-Tg-2aL"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="0Is-O6-1kH"/>
                                 <exclude reference="KpG-Jm-x6I"/>
                                 <exclude reference="bZJ-rc-xVf"/>
+                                <exclude reference="eDh-IF-yfK"/>
+                                <exclude reference="iPC-ZM-HQg"/>
+                                <exclude reference="qL4-gT-676"/>
                                 <exclude reference="Nge-YT-A8K"/>
                                 <exclude reference="d2D-nG-pRs"/>
                             </mask>
@@ -71,7 +92,7 @@
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="placeForDeck" destination="0z5-ro-0cJ" id="Ug1-ON-NvN"/>
+                        <outlet property="placeForDeck" destination="0z5-ro-0cJ" id="EYL-Km-UUi"/>
                         <outlet property="scoreLabel" destination="0KY-Ya-Do1" id="JfH-F0-ggG"/>
                     </connections>
                 </viewController>
@@ -133,7 +154,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ef0-vR-fMf">
                                 <rect key="frame" x="80" y="481" width="64" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -162,8 +183,7 @@
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="PlaceForDeckView" destination="S4d-dV-lS0" id="ZfC-Sz-tYF"/>
-                        <outlet property="placeForDeck" destination="S4d-dV-lS0" id="jZ9-A4-93j"/>
+                        <outlet property="placeForDeck" destination="S4d-dV-lS0" id="HsB-pR-yws"/>
                         <outlet property="scoreLabel" destination="Ef0-vR-fMf" id="yt4-iB-Ebf"/>
                     </connections>
                 </viewController>

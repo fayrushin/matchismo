@@ -18,11 +18,15 @@
 
 - (void)chooseCardAtIndex:(NSUInteger)index;
 - (Card *)cardAtIndex:(NSUInteger)index;
-- (void)addCardsFromDeck;
+- (void)addCardFromDeckToIndex:(NSUInteger)index;
+- (NSUInteger)numberOfCardsInDeck;
+- (void)moveLastCardToIndex:(NSUInteger) index;
+- (void)removeCardAtIndex:(NSUInteger) index;
 
 @property (nonatomic,readonly) NSInteger score;
 @property (nonatomic) NSInteger gameMode;
 @property (nonatomic, readonly) NSUInteger cardsInPlay;
+
 
 
 

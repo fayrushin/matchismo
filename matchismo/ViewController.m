@@ -12,12 +12,6 @@
 @interface ViewController ()
 
 
-
-@property(strong, nonatomic) Deck *myDeck;
-@property (weak, nonatomic) IBOutlet UIView *placeForDeck;
-@property (strong,nonatomic) NSMutableArray *cardViews;
-@property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
-
 @end
 
 @implementation ViewController
@@ -25,12 +19,58 @@
 #pragma mark - View life Cycle
 - (void) viewDidLoad
 {
+    
     [super viewDidLoad];
+    [self setRowsColumns];
+    [self addCardViewsToCollection];
+    for (int i = 0; i < self.cardCount; i++) {
+        
+        UIView *cardView = self.cardViews[i];
+        
+        CGRect myFrame = cardView.frame;
+        myFrame.origin = [self originForCard:i];
+        cardView.frame = myFrame;
+        cardView.bounds = [self boundSizeForCard];
+        self.cardViews[i] = cardView;
+        [self.placeForDeck addSubview:cardView];
+        
+        
+    }
+    
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+}
+-(void)viewDidLayoutSubviews
+{
+    for (int i = 0; i < self.game.cardsInPlay; i++) {
+        
+        UIView *cardView = self.cardViews[i];
+        
+        CGRect myFrame = cardView.frame;
+        myFrame.origin = [self originForCard:i];
+        cardView.frame = myFrame;
+        cardView.bounds = [self boundSizeForCard];
+        
+        //[self.placeForDeck addSubview:cardView];
+        
+    }
+    
 }
 
 
 
 #pragma mark - Properties
+
+-(NSInteger)cardCount
+{
+    if (!_cardCount) {
+        _cardCount = 30;
+    }
+    return _cardCount;
+}
 - (CardMatchingGame *)game
 {
     if (!_game) {
@@ -50,56 +90,100 @@
     }
     return _cardViews;
 }
+-(void)addCardViewsToCollection
+{
+    for (int i = 0; i < self.cardCount; i++) {
+        UIView *cardView = [self createViewOfCard:[self.game cardAtIndex:i] atNumber:i];
+        [self.cardViews addObject:cardView];
+    }
+}
+
+-(UIView *)createViewOfCard:(Card *)card atNumber:(int)number;
+{
+    return nil;
+}
+
+
 
 #pragma mark - Actions
+
+-(void)hlip:(UITapGestureRecognizer *)gesture
+{
+    UIView *view = gesture.view;
+    NSInteger choosenCardIndex = [self.cardViews indexOfObject:view];
+    [self.game chooseCardAtIndex:choosenCardIndex];
+    [self updateUI];
+}
+
 - (IBAction)redealButton:(UIButton *)sender
 {
-    NSInteger savingGameModeOfOldGame = self.game.gameMode;
+    
+    self.game = nil;
+    self.cardViews = nil;
+    self.cardViews = [[NSMutableArray alloc] init];
     self.game = [[CardMatchingGame alloc] initWithCardCount:self.cardCount usingDeck:[self createDeck]];
-    self.game.gameMode = savingGameModeOfOldGame;
+    [self setRowsColumns];
+    [self addCardViewsToCollection];
+    for (int i = 0; i < self.cardCount; i++) {
+        
+        UIView *cardView = self.cardViews[i];
+        
+        CGRect myFrame = cardView.frame;
+        myFrame.origin = [self originForCard:i];
+        cardView.frame = myFrame;
+        self.cardViews[i] =cardView;
+        [self.placeForDeck addSubview:cardView];
+        
+    }
+    
     [self updateUI];
     
 }
 
-- (IBAction)touchCardButton:(UIButton *)sender
-{
-    
-    NSInteger chosenButtonIndex = [self.cardButtons indexOfObject:sender];
-    [self.game chooseCardAtIndex:chosenButtonIndex];
-    [self updateUI];
-    
-}
 
 - (void) updateUI
 {
-    for (UIButton *cardButton in self.cardButtons) {
-        NSInteger cardButtonIndex = [self.cardButtons indexOfObject:cardButton];
-        Card *card = [self.game cardAtIndex:cardButtonIndex];
-        [cardButton setAttributedTitle:[self titleForCard:card] forState:UIControlStateNormal];
-        [cardButton setBackgroundImage:[self backgroundImageForCard:card] forState:UIControlStateNormal];
-        cardButton.enabled = !card.isMatched;
-        self.scoreLabel.text = [NSString stringWithFormat:@"Score: %ld", self.game.score];
-    }
-    
+    self.scoreLabel.text = [NSString stringWithFormat:@"Score: %ld", self.game.score];
+
 
 }
 
 #pragma mark - Utilities
-- (NSAttributedString *)titleForCardWithoutChecking:(Card *)card
+
+-(CGPoint)originForCard:(int) number
 {
-    return [[NSAttributedString alloc] initWithString:card.contents];
+    CGFloat width = self.placeForDeck.bounds.size.width;
+    CGFloat height = self.placeForDeck.bounds.size.height;
+    int row = (number+1) / self.columns;
+    int column = (number + 1) % self.columns;
+    if (column) {
+        row ++;
+    }
+    else column = self.columns;
+    
+    CGFloat x = (column - 1)/(CGFloat)self.columns * width;
+    CGFloat y = (row - 1)/(CGFloat)self.rows * height;
+    return CGPointMake(x, y);
+
 }
 
-- (NSAttributedString *)titleForCard:(Card *)card
+-(CGRect)boundSizeForCard
 {
-    NSAttributedString *title = [[NSAttributedString alloc]
-                                 initWithString:card.isChosen ? [[self titleForCardWithoutChecking:card] string] : @""];
-    return title;
+    CGRect bounds = self.placeForDeck.bounds;
+    CGRect cardBound;
+    cardBound.origin = CGPointMake(0, 0);
+    cardBound.size.width = bounds.size.width / self.columns * 0.7;
+    cardBound.size.height = bounds.size.height / self.rows * 0.7;
+    return cardBound;
 }
 
-- (UIImage *)backgroundImageForCard:(Card *)card
+-(void)setRowsColumns
 {
-    return [UIImage imageNamed:card.isChosen ? @"cardfront" : @"cardback"];
+    
 }
+
+
+
+
 
 @end

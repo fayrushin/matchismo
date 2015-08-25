@@ -13,5 +13,7 @@
 @property (strong, nonatomic) NSString *suit;
 @property (nonatomic) NSUInteger rank;
 @property (nonatomic) BOOL faceUp;
+//-(void)flip:(UITapGestureRecognizer *)gesture;
+@property (strong, nonatomic) UITapGestureRecognizer *tap;
 
 @end

@@ -8,9 +8,28 @@
 
 #import "PlayingCardView.h"
 
+@interface PlayingCardView()
+@property (nonatomic) CGFloat faceCardScaleFactor;
+@end
+
 @implementation PlayingCardView
 
 #pragma mark - Properties
+@synthesize faceCardScaleFactor = _faceCardScaleFactor;
+
+#define DEFAULT_FACE_CARD_SCALE_FACTOR 0.90
+
+-(CGFloat)faceCardScaleFactor
+{
+    if(!_faceCardScaleFactor) _faceCardScaleFactor = DEFAULT_FACE_CARD_SCALE_FACTOR;
+    return _faceCardScaleFactor;
+}
+
+-(void)setFaceCardScaleFactor:(CGFloat)faceCardScaleFactor
+{
+    _faceCardScaleFactor = faceCardScaleFactor;
+    [self setNeedsDisplay];
+}
 
 -(void)setSuit:(NSString *)suit
 {
@@ -50,10 +69,29 @@
     UIRectFill(self.bounds);
     [[UIColor blackColor] setStroke];
     [roundedRect stroke];
+    UIImage *faceImage = [UIImage imageNamed:[NSString stringWithFormat:@"%@%@", [self rankAsString],self.suit]];
+    if (self.faceUp) {
+        if (faceImage) {
+            CGRect imageRect = CGRectInset(self.bounds, self.bounds.size.width * (1.0 - self.faceCardScaleFactor), self.bounds.size.height * (1.0 - self.faceCardScaleFactor));
+            [faceImage drawInRect:imageRect];
+        }
+        else [self drawPips];
+        [self drawCorners];
+    }
+    else
+    {
+        [[UIImage imageNamed:@"cardback"] drawInRect:self.bounds];
+        
+    }
     
-    [self drawCorners];
+    
+    
 }
 
+-(void)drawPips
+{
+    
+}
 -(NSString *)rankAsString
 {
     return @[@"?",@"A",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10",@"J",@"Q",@"K"][self.rank];
@@ -72,6 +110,11 @@
     textBounds.origin = CGPointMake([self cornerOffset], [self cornerOffset]);
     textBounds.size = [cornerText size];
     [cornerText drawInRect:textBounds];
+    
+    CGContextRef contex = UIGraphicsGetCurrentContext();
+    CGContextTranslateCTM(contex, self.bounds.size.width, self.bounds.size.height);
+    CGContextRotateCTM(contex, M_PI);
+    [cornerText drawInRect:textBounds];
 }
 
 #pragma mark - Initialization
@@ -89,6 +132,12 @@
         [self setup];
     }
     return self;
+}
+
+#pragma mark - Touch recognizer
+
+-(void)flip:(UITapGestureRecognizer *)gesture{
+    self.faceUp = !self.faceUp;
 }
 
 

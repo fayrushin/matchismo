@@ -11,6 +11,13 @@
 
 @interface SetCardView : UIView
 
+@property(nonatomic) NSUInteger color;
+@property(nonatomic) NSUInteger symbol;
+@property(nonatomic) NSUInteger shading;
+@property(nonatomic) NSUInteger number;
+@property (nonatomic,strong) UITapGestureRecognizer *tap;
+@property(nonatomic) BOOL choosen;
+
 -(void)setCardFeatures:(SetCard *)card;
 
 @end

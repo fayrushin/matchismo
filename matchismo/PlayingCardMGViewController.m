@@ -9,11 +9,9 @@
 #import "PlayingCardMGViewController.h"
 #import "PlayingCardDeck.h"
 #import "PlayingCardView.h"
-
+#import "PlayingCard.h"
 
 @interface PlayingCardMGViewController ()
-@property (weak, nonatomic) IBOutlet UIView *PlaceForDeckView;
-@property (strong, nonatomic)PlayingCardView *playingCardView;
 
 @end
 
@@ -23,20 +21,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:YES];
-    if (self) {
-        CGRect bounds = self.PlaceForDeckView.bounds;
-        CGRect cardBound = CGRectMake(bounds.origin.x, bounds.origin.y, bounds.size.width/6.0, bounds.size.height/6.0);
-        self.playingCardView = [[PlayingCardView alloc] initWithFrame:cardBound];
-        self.playingCardView.rank = 13;
-        self.playingCardView.suit = @"♥︎";
-        [self.PlaceForDeckView addSubview:self.playingCardView];
-    }
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -49,6 +34,57 @@
     return [[PlayingCardDeck alloc] init];
 }
 
+-(UIView *)createViewOfCard:(Card *)card atNumber:(int)number
+{
+    
+    PlayingCardView *cardView = [[PlayingCardView alloc] initWithFrame:[self boundSizeForCard]];
+    cardView.rank = [(PlayingCardView *)card rank];
+    cardView.suit = [(PlayingCardView *)card suit];
+    cardView.tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hlip:)];
+    [cardView addGestureRecognizer:cardView.tap];
+
+    return cardView;
+}
+
+- (void) updateUI
+{
+    [super updateUI];
+    for (int i = 0; i < [self.cardViews count]; i++) {
+        Card *card = [self.game cardAtIndex:i];
+        PlayingCardView *cardView = self.cardViews[i];
+        
+         {
+             if ( (card.isChosen && !cardView.faceUp) || (!card.isChosen && cardView.faceUp) ) {
+                 [UIView transitionWithView:cardView duration:0.2 options:UIViewAnimationOptionTransitionFlipFromLeft
+                                 animations:^{
+                     if (card.isChosen)  cardView.faceUp = YES;
+                     else cardView.faceUp = NO;
+                     
+                 }
+                                 completion:nil];
+             }
+
+             }
+         }
+    
+}
+-(IBAction)redealButton:(UIButton *)sender
+{
+    for (int i = 0; i < [self.cardViews count]; i++) {
+        PlayingCardView *view = self.cardViews[i];
+        [view removeGestureRecognizer:view.tap];
+        [view removeFromSuperview];
+    }
+    [super redealButton:sender];
+    
+}
+
+- (void)setRowsColumns
+{
+    self.columns = 3;
+    self.rows = 5;
+    self.cardCount = 15;
+}
 
 
 

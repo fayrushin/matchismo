@@ -19,13 +19,41 @@
 
 @implementation CardMatchingGame
 
-- (void)addCardsFromDeck
+- (void)removeCardAtIndex:(NSUInteger) index
+{
+    if (index < [self.cards count]) {
+        [self.cards removeObjectAtIndex:index];
+    }
+}
+
+- (void)moveLastCardToIndex:(NSUInteger) index
+{
+    if (index < [self.cards count]) {
+        self.cards[index] = [self.cards lastObject];
+        [self.cards removeLastObject];
+    }
+}
+
+
+- (NSUInteger)numberOfCardsInDeck
+{
+    return self.gameDeck.cardsInDeck;
+}
+
+- (void)addCardFromDeckToIndex:(NSUInteger)index
 {
     Card *card = [self.gameDeck drawRandomCard];
     if (card) {
-        [self.cards addObject:card];
+        if(index >= [self.cards count]){
+            [self.cards addObject:card];
+        }
+        else self.cards[index] = card;
+        
+        self.cardsInPlay ++;
     }
+    else NSLog(@"inserting to wrong index");
 }
+
 - (NSMutableArray *) cards
 {
     if(!_cards) _cards = [[NSMutableArray alloc] init];

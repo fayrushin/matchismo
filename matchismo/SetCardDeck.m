@@ -15,8 +15,8 @@
     self = [super init];
     if (self) {
         for (NSUInteger i = 1; i <= [SetCard maxNumber]; i++) {
-            for (NSUInteger j = 1; j < [SetCard maxNumber]; j++) {
-                for (NSUInteger k = 1; k < [SetCard maxNumber]; k++) {
+            for (NSUInteger j = 1; j <= [SetCard maxNumber]; j++) {
+                for (NSUInteger k = 1; k <= [SetCard maxNumber]; k++) {
                     for (NSUInteger number = 1; number <= [SetCard maxNumber]; number++) {
                         SetCard *card = [[SetCard alloc] init];
                         card.color = i;
