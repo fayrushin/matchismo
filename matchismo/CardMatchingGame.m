@@ -9,7 +9,6 @@
 #import "CardMatchingGame.h"
 
 @interface CardMatchingGame()
-@property (nonatomic, readwrite) NSInteger score;
 @property (nonatomic, strong) NSMutableArray *cards;
 @property (nonatomic) NSInteger numberOfChosenCards;
 @property (nonatomic,strong) Deck *gameDeck;

@@ -26,6 +26,15 @@
     return self;
 }
 
+-(void)setPan:(UIPanGestureRecognizer *)pan
+{
+    if (!_pan) {
+        _pan = [[UIPanGestureRecognizer alloc] init];
+    }
+    _pan = pan;
+    [self setNeedsDisplay];
+}
+
 -(void)setCardFeatures:(SetCard *)card
 {
     self.color = card.color;
@@ -67,6 +76,12 @@
     [self setNeedsDisplay];
 }
 
+-(void)setShowStar:(BOOL)showStar
+{
+    _showStar = showStar;
+    [self setNeedsDisplay];
+}
+
 
 -(void) drawRect:(CGRect)rect
 {
@@ -105,8 +120,13 @@
         [self setStripes:path];
     }
     
-
+    if (self.showStar) {
+        [self drawStar];
+    }
 }
+
+
+
 -(UIBezierPath *)drawWavePath:(CGFloat)height width:(CGFloat)width centerX:(CGFloat)x
 {
     UIBezierPath *path = [[UIBezierPath alloc] init];
@@ -151,6 +171,21 @@
 -(CGFloat)cornerScaleFactor {return self.bounds.size.height /CORNER_FONT_STANDART_HEIGHT; };
 -(CGFloat)cornerRadius { return CORNER_RADIUS * [self cornerScaleFactor]; };
 -(CGFloat)cornerOffset {return [self cornerRadius] / 3.0; };
+
+-(void)drawStar
+{
+    CGPoint center = CGPointMake([self cornerOffset], [self cornerOffset]);
+    
+    CGContextRef currentContext = UIGraphicsGetCurrentContext();
+    CGContextSaveGState(currentContext);
+    CGContextSetShadow(currentContext, CGSizeMake(4,7), 3);
+    UIImage *star = [UIImage imageNamed:@"star.png"];
+    CGRect secondFrame = CGRectMake(center.x/2.0, center.y/2.0, 6*center.x, 6*center.y);
+    [star drawInRect:secondFrame];
+    CGContextRestoreGState(currentContext);
+    
+    //CGContextRelease(currentContext);
+}
 
 -(UIBezierPath *)drawOvalPath:(CGFloat)height width:(CGFloat)width centerX:(CGFloat)x
 {

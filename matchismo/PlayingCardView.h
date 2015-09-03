@@ -15,5 +15,6 @@
 @property (nonatomic) BOOL faceUp;
 //-(void)flip:(UITapGestureRecognizer *)gesture;
 @property (strong, nonatomic) UITapGestureRecognizer *tap;
+@property (nonatomic,strong) UIPanGestureRecognizer *pan;
 
 @end

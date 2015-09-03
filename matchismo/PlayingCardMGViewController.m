@@ -19,16 +19,6 @@
 
 #pragma mark - View life cycle
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (Deck *)createDeck
 {
     return [[PlayingCardDeck alloc] init];
@@ -42,9 +32,12 @@
     cardView.suit = [(PlayingCardView *)card suit];
     cardView.tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hlip:)];
     [cardView addGestureRecognizer:cardView.tap];
+    cardView.pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
+    [cardView addGestureRecognizer:cardView.pan];
 
     return cardView;
 }
+
 
 - (void) updateUI
 {
@@ -55,7 +48,7 @@
         
          {
              if ( (card.isChosen && !cardView.faceUp) || (!card.isChosen && cardView.faceUp) ) {
-                 [UIView transitionWithView:cardView duration:0.2 options:UIViewAnimationOptionTransitionFlipFromLeft
+                 [UIView transitionWithView:cardView duration:0.5 options:UIViewAnimationOptionTransitionFlipFromLeft
                                  animations:^{
                      if (card.isChosen)  cardView.faceUp = YES;
                      else cardView.faceUp = NO;
@@ -63,9 +56,21 @@
                  }
                                  completion:nil];
              }
-
+             if (card.isMatched && cardView.alpha == 1) {
+                 [UIView transitionWithView:cardView duration:0.5 options:UIViewAnimationOptionBeginFromCurrentState
+                                 animations:^{
+                                     cardView.alpha = 0.5;
+                                     
+                                 }
+                                 completion:nil];
+                 
              }
+
          }
+        
+    }
+    [self animateReShuffle:self.cardViews];
+
     
 }
 -(IBAction)redealButton:(UIButton *)sender
@@ -73,7 +78,7 @@
     for (int i = 0; i < [self.cardViews count]; i++) {
         PlayingCardView *view = self.cardViews[i];
         [view removeGestureRecognizer:view.tap];
-        [view removeFromSuperview];
+        [self animateRemovingCards:view];
     }
     [super redealButton:sender];
     
@@ -81,9 +86,9 @@
 
 - (void)setRowsColumns
 {
-    self.columns = 3;
-    self.rows = 5;
-    self.cardCount = 15;
+    self.columns = 5;
+    self.rows = 6;
+    self.cardCount = 30;
 }
 
 

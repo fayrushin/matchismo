@@ -29,6 +29,17 @@
 -(CGRect)boundSizeForCard;
 -(void)setRowsColumns;
 - (IBAction)redealButton:(UIButton *)sender;
+-(void)animateRemovingCards:(UIView *)cardView;
+-(void)animateAddingCard:(UIView *)cardView;
+-(void) animateReShuffle:(NSArray *)cardVievs;
+
+
+- (IBAction)pinch:(UIPinchGestureRecognizer *)sender;
+-(void)pan:(UIPanGestureRecognizer *)sender;
+
+
+
+
 
 
 - (Deck *)createDeck;

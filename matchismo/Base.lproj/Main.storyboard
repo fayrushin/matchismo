@@ -25,19 +25,16 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="redealButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="OyA-2j-UzD"/>
                                     <action selector="redealButton:" destination="F4Q-8J-Ah6" eventType="touchUpInside" id="qwy-h2-0Yf"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0KY-Ya-Do1">
-                                <rect key="frame" x="157" y="490.5" width="64" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0z5-ro-0cJ">
                                 <rect key="frame" x="16" y="28" width="288" height="445"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="ydg-kV-FLd" appends="YES" id="fra-g7-QZS"/>
+                                </connections>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R2x-9N-EnD">
                                 <rect key="frame" x="80" y="481" width="69" height="30"/>
@@ -50,10 +47,28 @@
                                     <action selector="addCardsButton:" destination="F4Q-8J-Ah6" eventType="touchUpInside" id="q2C-d3-k8V"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0KY-Ya-Do1">
+                                <rect key="frame" x="240" y="485" width="64" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IVD-4F-kNR">
+                                <rect key="frame" x="157" y="481" width="30" height="30"/>
+                                <color key="backgroundColor" red="0.97659731780000003" green="1" blue="0.52020342149999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="hint">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="showHintButton:" destination="F4Q-8J-Ah6" eventType="touchUpInside" id="pz6-51-1bR"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="0z5-ro-0cJ" firstAttribute="leading" secondItem="Z5W-5c-Vcl" secondAttribute="leading" id="0Is-O6-1kH"/>
+                            <constraint firstItem="IVD-4F-kNR" firstAttribute="leading" secondItem="R2x-9N-EnD" secondAttribute="trailing" constant="8" id="0XP-Be-qji"/>
                             <constraint firstItem="0z5-ro-0cJ" firstAttribute="trailing" secondItem="6d3-Dt-puu" secondAttribute="trailingMargin" id="2AX-pB-P9G"/>
                             <constraint firstItem="R2x-9N-EnD" firstAttribute="height" secondItem="Z5W-5c-Vcl" secondAttribute="height" id="3Xh-V2-TfU"/>
                             <constraint firstItem="0z5-ro-0cJ" firstAttribute="top" secondItem="jAY-8E-KxC" secondAttribute="bottom" constant="8" id="3sY-gL-Rdw"/>
@@ -68,9 +83,13 @@
                             <constraint firstItem="0KY-Ya-Do1" firstAttribute="leading" secondItem="Z5W-5c-Vcl" secondAttribute="trailing" constant="8" id="eDh-IF-yfK"/>
                             <constraint firstItem="4fM-Pp-xLC" firstAttribute="top" secondItem="Z5W-5c-Vcl" secondAttribute="bottom" constant="8" symbolic="YES" id="eSh-dm-UAZ"/>
                             <constraint firstItem="Z5W-5c-Vcl" firstAttribute="leading" secondItem="6d3-Dt-puu" secondAttribute="leadingMargin" id="giA-wH-qxV"/>
+                            <constraint firstItem="0KY-Ya-Do1" firstAttribute="trailing" secondItem="6d3-Dt-puu" secondAttribute="trailingMargin" id="gni-gk-HkD"/>
                             <constraint firstItem="0KY-Ya-Do1" firstAttribute="bottom" secondItem="Z5W-5c-Vcl" secondAttribute="bottom" id="iPC-ZM-HQg"/>
+                            <constraint firstItem="IVD-4F-kNR" firstAttribute="baseline" secondItem="R2x-9N-EnD" secondAttribute="baseline" id="oRX-Rh-20M"/>
                             <constraint firstItem="0KY-Ya-Do1" firstAttribute="height" secondItem="Z5W-5c-Vcl" secondAttribute="height" id="qL4-gT-676"/>
                             <constraint firstItem="Z5W-5c-Vcl" firstAttribute="top" secondItem="0z5-ro-0cJ" secondAttribute="bottom" constant="8" symbolic="YES" id="r5W-mj-RJB"/>
+                            <constraint firstItem="4fM-Pp-xLC" firstAttribute="top" secondItem="0KY-Ya-Do1" secondAttribute="bottom" constant="13.5" id="tPK-hu-vWF"/>
+                            <constraint firstItem="IVD-4F-kNR" firstAttribute="height" secondItem="R2x-9N-EnD" secondAttribute="height" id="uqE-Gq-Axn"/>
                             <constraint firstItem="R2x-9N-EnD" firstAttribute="bottom" secondItem="Z5W-5c-Vcl" secondAttribute="bottom" id="zaW-Tg-2aL"/>
                         </constraints>
                         <variation key="default">
@@ -78,11 +97,13 @@
                                 <exclude reference="0Is-O6-1kH"/>
                                 <exclude reference="KpG-Jm-x6I"/>
                                 <exclude reference="bZJ-rc-xVf"/>
+                                <exclude reference="Wqd-we-4Qa"/>
+                                <exclude reference="Nge-YT-A8K"/>
+                                <exclude reference="d2D-nG-pRs"/>
+                                <exclude reference="5Y2-I2-7W2"/>
                                 <exclude reference="eDh-IF-yfK"/>
                                 <exclude reference="iPC-ZM-HQg"/>
                                 <exclude reference="qL4-gT-676"/>
-                                <exclude reference="Nge-YT-A8K"/>
-                                <exclude reference="d2D-nG-pRs"/>
                             </mask>
                         </variation>
                     </view>
@@ -97,6 +118,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q0j-eQ-72v" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <pinchGestureRecognizer id="ydg-kV-FLd">
+                    <connections>
+                        <action selector="pinch:" destination="F4Q-8J-Ah6" id="1BW-lz-myT"/>
+                    </connections>
+                </pinchGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-586" y="37"/>
         </scene>
@@ -150,6 +176,10 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S4d-dV-lS0">
                                 <rect key="frame" x="16" y="28" width="288" height="445"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="6h8-zW-94E" appends="YES" id="WP8-Gw-Pb7"/>
+                                </connections>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ef0-vR-fMf">
                                 <rect key="frame" x="80" y="481" width="64" height="30"/>
@@ -188,6 +218,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
+                <pinchGestureRecognizer id="6h8-zW-94E">
+                    <connections>
+                        <action selector="pinch:" destination="vXZ-lx-hvc" id="mkY-kb-7lT"/>
+                    </connections>
+                </pinchGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-586" y="-640"/>
         </scene>

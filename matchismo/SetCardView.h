@@ -16,7 +16,9 @@
 @property(nonatomic) NSUInteger shading;
 @property(nonatomic) NSUInteger number;
 @property (nonatomic,strong) UITapGestureRecognizer *tap;
+@property (nonatomic,strong) UIPanGestureRecognizer *pan;
 @property(nonatomic) BOOL choosen;
+@property(nonatomic) BOOL showStar;
 
 -(void)setCardFeatures:(SetCard *)card;
 

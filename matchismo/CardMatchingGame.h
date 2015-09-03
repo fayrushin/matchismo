@@ -23,7 +23,7 @@
 - (void)moveLastCardToIndex:(NSUInteger) index;
 - (void)removeCardAtIndex:(NSUInteger) index;
 
-@property (nonatomic,readonly) NSInteger score;
+@property (nonatomic) NSInteger score;
 @property (nonatomic) NSInteger gameMode;
 @property (nonatomic, readonly) NSUInteger cardsInPlay;
 
