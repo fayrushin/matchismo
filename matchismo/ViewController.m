@@ -153,15 +153,8 @@
     
     if (scale < 1) {
         for (int i = 0; i < [self.attachments count]; i++) {
-            CGPoint center = ((UIView *)self.cardViews[i]).center;
             UIAttachmentBehavior *attachment = self.attachments[i];
-            CGPoint distanceToDeduct;
-            
-            distanceToDeduct.x = attachment.anchorPoint.x - center.x;
-            distanceToDeduct.y = attachment.anchorPoint.y - center.y;
-            
-            attachment.length -= hypot(distanceToDeduct.x, distanceToDeduct.y)/8.0;
-
+            attachment.length -= attachment.length/8.0;
         }
     }
     
